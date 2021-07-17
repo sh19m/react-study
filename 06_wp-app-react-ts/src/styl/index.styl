@@ -1,4 +1,69 @@
-// stylusテスト
-.font-blue
-  color blue
-  font-size 30px
+body
+  background-color black
+  color white
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+
+.title
+  color yellow
+
+/** カテゴリー */
+.category
+  display flex
+  justify-content flex-start
+  height 35px
+  font-size 20px
+  margin-top -6px
+  margin-left 8px
+  line-height 30px
+  &-item
+    margin 0px 8px
+
+/** 記事一覧 */
+.article
+  &-area
+    display flex
+    flex-wrap wrap
+    justify-content flex-start
+  &-card
+    display flex
+    flex-flow column
+    align-items center
+    background-color white
+    color black
+    width 300px
+    height 320px
+    margin 12px
+    border-radius 5px
+    &-image
+      background-color pink
+      width 280px
+      height 170px
+      margin-top 10px
+    &-title
+      font-size 14px
+      font-weight bold
+      overflow hidden
+      width 280px
+      height 65px
+      margin-top 8px
+    &-category
+      display flex
+      flex-wrap wrap
+      align-items center
+      width 280px
+      height 28px
+      margin-top 8px
+      overflow hidden
+      &-item
+        background-color gray
+        font-size 8px
+        padding 6px
+        border-radius 12px
+        margin 0px 6px 3px 0px
+    &-date
+      font-size 12px
+      width 280px
+      text-align right
+      margin-top 8px
+
+
