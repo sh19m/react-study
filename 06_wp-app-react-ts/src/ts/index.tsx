@@ -4,12 +4,12 @@ import {createStore, combineReducers, applyMiddleware} from "redux";
 import {Provider} from "react-redux";
 import {logger} from "redux-logger";
 import thunk from "redux-thunk";
-import * as reducers from "./reducers";
 import App from "./App";
+import reducers from "./reducers";
 import '../styl/index.styl'
 
 const store = createStore(
-    combineReducers(reducers),
+    reducers,
     applyMiddleware(logger, thunk)
 );
 

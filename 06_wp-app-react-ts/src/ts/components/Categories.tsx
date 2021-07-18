@@ -1,12 +1,25 @@
 import React from "react";
+import {useSelector} from "react-redux";
 import '../../styl/index.styl';
+import {ReducerState} from "../reducers";
+import {Category} from "../reducers/Categories";
 
 function Categories() {
+    const categories = useSelector((state: ReducerState) => state.categoriesState.categories);
+
     return (
         <div className="category">
-            <div className="category-item">ALL</div>|
-            <div className="category-item">日常</div>|
-            <div className="category-item">PC創作</div>
+            {
+                categories.map((category: Category) => {
+                    return (
+                        <React.Fragment>
+                            <span className="category-border">|</span>
+                            <div className="category-item">{category.name}</div>
+                        </React.Fragment>
+                    );
+                })
+
+            }
         </div>
     );
 }

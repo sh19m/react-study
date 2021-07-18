@@ -1,27 +1,32 @@
 import React from "react";
+import {useSelector} from "react-redux";
 import '../../styl/index.styl';
+import {ReducerState} from "../reducers";
+import {Post, PostCategory} from "../reducers/ArticleList";
 
 function ArticleList() {
+    const posts = useSelector((state: ReducerState) => state.articleListState.posts);
+
     return (
         <div className="article-area">
-            <div className="article-card">
-                <div className="article-card-image">仮画像</div>
-                <a className="article-card-title" href="https://elekibear.com/20210712_01">【React.js】第二回 Reactでアプリ開発！ 〜React×TypeScript環境を一から構築するぜ編〜</a>
-                <div className="article-card-category"><span className="article-card-category-item">PC創作</span><span className="article-card-category-item">アプリ開発</span></div>
-                <div className="article-card-date">2021.07.14</div>
-            </div>
-            <div className="article-card">
-                <div className="article-card-image">仮画像</div>
-                <a className="article-card-title" href="https://elekibear.com/20210712_01">【React.js】第二回 Reactでアプリ開発！ 〜React×TypeScript環境を一から構築するぜ編〜</a>
-                <div className="article-card-category"><span className="article-card-category-item">PC創作</span><span className="article-card-category-item">アプリ開発</span></div>
-                <div className="article-card-date">2021.07.14</div>
-            </div>
-            <div className="article-card">
-                <div className="article-card-image">仮画像</div>
-                <a className="article-card-title" href="https://elekibear.com/20210712_01">【React.js】第二回 Reactでアプリ開発！ 〜React×TypeScript環境を一から構築するぜ編〜</a>
-                <div className="article-card-category"><span className="article-card-category-item">PC創作</span><span className="article-card-category-item">アプリ開発</span></div>
-                <div className="article-card-date">2021.07.14</div>
-            </div>
+            {
+                posts.map((post: Post) => {
+                    return (
+                        <div className="article-card">
+                            <div className="article-card-image">{post.image}</div>
+                            <a className="article-card-title" href={post.url}>{post.title}</a>
+                            <div className="article-card-category">
+                                {
+                                    post.categories.map((category: PostCategory) => {
+                                        return <span className="article-card-category-item">{category.name}</span>;
+                                    })
+                                }
+                            </div>
+                            <div className="article-card-date">{post.date.slice(0, 10)}</div>
+                        </div>
+                    );
+                })
+            }
         </div>
 
     );
