@@ -1,8 +1,83 @@
 /*!****************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/stylus-loader/dist/cjs.js!./src/styl/index.styl ***!
   \****************************************************************************************************************/
-.font-blue {
-  color: #00f;
-  font-size: 30px;
+body {
+  background-color: #000;
+  color: #fff;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+}
+.title {
+  color: #ff0;
+}
+/** カテゴリー */
+.category {
+  display: flex;
+  justify-content: flex-start;
+  height: 35px;
+  font-size: 20px;
+  margin-top: -6px;
+  margin-left: 8px;
+  line-height: 30px;
+}
+.category-border {
+  color: #d3d3d3;
+  font-weight: lighter;
+}
+.category-item {
+  margin: auto 8px;
+  color: #adff2f;
+}
+/** 記事一覧 */
+.article-area {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+.article-card {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  background-color: #fff;
+  color: #000;
+  width: 300px;
+  height: 320px;
+  margin: 12px;
+  border-radius: 5px;
+}
+.article-card-image {
+  background-color: #ffc0cb;
+  width: 280px;
+  height: 170px;
+  margin-top: 10px;
+}
+.article-card-title {
+  font-size: 14px;
+  font-weight: bold;
+  overflow: hidden;
+  width: 280px;
+  height: 65px;
+  margin-top: 8px;
+}
+.article-card-category {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  width: 280px;
+  height: 28px;
+  margin-top: 8px;
+  overflow: hidden;
+}
+.article-card-category-item {
+  background-color: #808080;
+  font-size: 8px;
+  padding: 6px;
+  border-radius: 12px;
+  margin: 0px 6px 3px 0px;
+}
+.article-card-date {
+  font-size: 12px;
+  width: 280px;
+  text-align: right;
+  margin-top: 8px;
 }
 
