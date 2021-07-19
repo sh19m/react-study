@@ -12,7 +12,7 @@ function Categories() {
             {
                 categories.map((category: Category) => {
                     return (
-                        <React.Fragment>
+                        <React.Fragment key={category.id}>
                             <span className="category-border">|</span>
                             <div className="category-item">{category.name}</div>
                         </React.Fragment>

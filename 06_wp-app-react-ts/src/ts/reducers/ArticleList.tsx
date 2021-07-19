@@ -1,3 +1,6 @@
+import {ArticleListActions} from "../actions/ArticleList";
+import ActionTypes from "../actions/ActionTypes";
+
 export type PostCategory = {
     id: number,
     name: string,
@@ -11,65 +14,64 @@ export type Post = {
     date: string,
 };
 export type ArticleListState = {
-    posts: Post[]
+    posts: Post[],
+    error: boolean,
 };
-// TODO APIで取得する
 const initialState: ArticleListState = {
-    posts: [
-        {
-            id: 1,
-            title: "【React.js】第二回 Reactでアプリ開発！ 〜React×TypeScript環境を一から構築するぜ編〜",
-            url: "https://elekibear.com/20210712_01",
-            image: "仮画像", // TODO 本来はURLが入る
-            categories: [
-                {
-                    id: 1,
-                    name: "PC創作",
-                },
-                {
-                    id: 2,
-                    name: "ゲーム・アプリ開発",
-                },
-            ],
-            date: "2020-05-31T21:56:04+09:00",
-        },
-        {
-            id: 2,
-            title: "【React.js】第二回 Reactでアプリ開発！ 〜React×TypeScript環境を一から構築するぜ編〜",
-            url: "https://elekibear.com/20210712_01",
-            image: "仮画像", // TODO 本来はURLが入る
-            categories: [
-                {
-                    id: 1,
-                    name: "PC創作",
-                },
-                {
-                    id: 2,
-                    name: "ゲーム・アプリ開発",
-                },
-            ],
-            date: "2020-05-31T21:56:04+09:00",
-        },
-        {
-            id: 3,
-            title: "【React.js】第二回 Reactでアプリ開発！ 〜React×TypeScript環境を一から構築するぜ編〜",
-            url: "https://elekibear.com/20210712_01",
-            image: "仮画像", // TODO 本来はURLが入る
-            categories: [
-                {
-                    id: 1,
-                    name: "PC創作",
-                },
-                {
-                    id: 2,
-                    name: "ゲーム・アプリ開発",
-                },
-            ],
-            date: "2020-05-31T21:56:04+09:00",
-        },
-    ]
+    posts: [],
+    error: false,
 }
 
-export default function articleListReducer(state: ArticleListState = initialState): ArticleListState {
-    return state;
+// 最大表示記事数
+const MAX_DISPLAY_POSTS: number = 20;
+
+// 記事データを取得
+const getPosts = (json: any): Post[] => {
+    const posts: Post[] = [];
+    const postsData: any = json.posts;
+    // TODO リクエストで制御した方がよい
+    const postsCount = json.posts.length < MAX_DISPLAY_POSTS ? json.posts.length : MAX_DISPLAY_POSTS;
+    // 取得データを配列に格納
+    for (let i = 0; i < postsCount; i++) {
+        const post = postsData[i];
+        // カテゴリー配列を取り出す
+        const categories = Object.entries(post.terms.category).map(([name, category]: [string, any]) => {
+            return {
+                id: category.ID,
+                name: name,
+            }
+        });
+        // 記事データを格納
+        posts.push({
+            id: post.ID,
+            title: post.title,
+            url: post.URL,
+            image: post.featured_image,
+            categories: categories, // TODO
+            date: post.date,
+        });
+
+    }
+    return posts;
+}
+
+export default function articleListReducer(state: ArticleListState = initialState,
+                                           action: ArticleListActions): ArticleListState {
+    switch (action.type) {
+        // リクエスト開始時に値を初期化
+        case ActionTypes.START_REQUEST:
+            return {
+                posts: [],
+                error: false,
+            };
+            break;
+        // データ受信時にPostデータを設定
+        case ActionTypes.RECEIVE_DATA:
+            return action.payload.error
+                ? {...state, error: true}
+                : {...state, posts: getPosts(action.payload.json)};
+            break;
+        default:
+            return state;
+    }
 }
