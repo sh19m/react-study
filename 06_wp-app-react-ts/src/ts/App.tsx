@@ -6,7 +6,9 @@ import '../styl/index.styl';
 export default function App() {
     return (
         <div>
-            <h1 className="title">都会のエレキベア</h1>
+            <div className="app-bar">
+                <div className="title">都会のエレキベア</div>
+            </div>
             <Categories />
             <ArticleList />
         </div>

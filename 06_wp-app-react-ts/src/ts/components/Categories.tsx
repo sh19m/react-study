@@ -18,8 +18,8 @@ function Categories() {
                         </React.Fragment>
                     );
                 })
-
             }
+            <span className="category-border">|</span>
         </div>
     );
 }

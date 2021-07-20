@@ -1,10 +1,21 @@
 body
-  background-color black
+  background-color #333333
   color white
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  margin 0px
 
+/** ヘッダー */
+.app-bar
+  background-color #222222
+  top 0px
+  height 80px
+  border 1px solid #666666
 .title
-  color yellow
+  color #FFFF33
+  font-size 34px
+  font-weight bold
+  padding 3px 12px
+  line-height 80px
 
 /** カテゴリー */
 .category
@@ -12,7 +23,7 @@ body
   justify-content flex-start
   height 35px
   font-size 20px
-  margin-top -6px
+  margin-top 12px
   margin-left 8px
   line-height 30px
   &-border
@@ -20,7 +31,7 @@ body
     font-weight lighter
   &-item
     margin auto 8px
-    color greenyellow
+    color #CCCCFF
 
 /** 記事一覧 */
 .article
@@ -60,9 +71,10 @@ body
       margin-top 8px
       overflow hidden
       &-item
-        background-color gray
+        background-color #333333
+        color white
         font-size 8px
-        padding 6px
+        padding 6px 10px
         border-radius 12px
         margin 0px 6px 3px 0px
     &-date

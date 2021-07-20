@@ -2,12 +2,24 @@
   !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/stylus-loader/dist/cjs.js!./src/styl/index.styl ***!
   \****************************************************************************************************************/
 body {
-  background-color: #000;
+  background-color: #333;
   color: #fff;
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  margin: 0px;
+}
+/** ヘッダー */
+.app-bar {
+  background-color: #222;
+  top: 0px;
+  height: 80px;
+  border: 1px solid #666;
 }
 .title {
-  color: #ff0;
+  color: #ff3;
+  font-size: 34px;
+  font-weight: bold;
+  padding: 3px 12px;
+  line-height: 80px;
 }
 /** カテゴリー */
 .category {
@@ -15,7 +27,7 @@ body {
   justify-content: flex-start;
   height: 35px;
   font-size: 20px;
-  margin-top: -6px;
+  margin-top: 12px;
   margin-left: 8px;
   line-height: 30px;
 }
@@ -25,13 +37,14 @@ body {
 }
 .category-item {
   margin: auto 8px;
-  color: #adff2f;
+  color: #ccf;
 }
 /** 記事一覧 */
 .article-area {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
+  cursor: pointer;
 }
 .article-card {
   display: flex;
@@ -45,7 +58,7 @@ body {
   border-radius: 5px;
 }
 .article-card-image {
-  background-color: #ffc0cb;
+  object-fit: cover;
   width: 280px;
   height: 170px;
   margin-top: 10px;
@@ -68,9 +81,10 @@ body {
   overflow: hidden;
 }
 .article-card-category-item {
-  background-color: #808080;
+  background-color: #333;
+  color: #fff;
   font-size: 8px;
-  padding: 6px;
+  padding: 6px 10px;
   border-radius: 12px;
   margin: 0px 6px 3px 0px;
 }
@@ -79,5 +93,10 @@ body {
   width: 280px;
   text-align: right;
   margin-top: 8px;
+}
+/** ローディング */
+.load-msg {
+  margin: 12px;
+  font-size: 25px;
 }
 
