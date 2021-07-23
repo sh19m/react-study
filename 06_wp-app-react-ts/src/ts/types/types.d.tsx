@@ -15,6 +15,8 @@ declare namespace StateType {
     };
     type ArticleListState = {
         posts: Post[],
+        posts_display_count: number,
+        posts_all_count: number,
         error: boolean,
     };
     /** Categories */
@@ -54,6 +56,7 @@ declare namespace JsonType {
         date: string,
     };
     type PostsResponse = {
+        found: number,
         posts: Post[],
     };
     /** Categories */

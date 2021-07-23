@@ -9,7 +9,9 @@ const onClickPost = (url: string) => {
 
 function ArticleList() {
     const dispatch = useDispatch();
-    const posts = useSelector((state: StateType.ReducerState) => state.articleListState.posts);
+    const postsDisplayCount: number = useSelector((state: StateType.ReducerState) => state.articleListState.posts_display_count);
+    const postsAllCount: number = useSelector((state: StateType.ReducerState) => state.articleListState.posts_all_count);
+    const posts: StateType.Post[] = useSelector((state: StateType.ReducerState) => state.articleListState.posts);
 
     // レンダリング時に記事データを取得
     useEffect(() => {
@@ -27,6 +29,7 @@ function ArticleList() {
     } else {
         return (
             <div className="article-area">
+                <div className="article-count">検索結果 {postsAllCount} 件のうち {postsDisplayCount} 件を表示しています。</div>
                 {
                     posts.map((post: StateType.Post) => {
                         return (

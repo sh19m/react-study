@@ -4,25 +4,28 @@ import ActionTypes from "../actions/ActionTypes";
 
 const initialState: StateType.ArticleListState = {
     posts: [],
+    posts_display_count: 0,
+    posts_all_count: 0,
     error: false,
 }
 
-// 最大表示記事数
-const MAX_DISPLAY_POSTS: number = 20;
-
 // 記事データを取得
-const getPosts = (json: JsonType.PostsResponse | null): StateType.Post[] => {
+const getPostsInfo = (json: JsonType.PostsResponse | null): StateType.ArticleListState => {
+    // State定義
+    const state: StateType.ArticleListState = {
+        posts: [],
+        posts_display_count: 0,
+        posts_all_count: 0,
+        error: false,
+    };
     // NULLチェック
-    const posts: StateType.Post[] = initialState.posts;
-    if (json == null) return posts;
+    if (json == null) return state;
     // jsonからStateに変換
     const postsData: JsonType.Post[] = json.posts;
-    // TODO リクエストで制御した方がよい
-    const postsCount: number = json.posts.length < MAX_DISPLAY_POSTS ? json.posts.length : MAX_DISPLAY_POSTS;
     // 取得データを配列に格納
-    for (let i = 0; i < postsCount; i++) {
-        const post: JsonType.Post = postsData[i];
+    for (let i = 0; i < json.posts.length; i++) {
         // カテゴリー配列を取り出す
+        const post: JsonType.Post = postsData[i];
         const categories = Object.entries(post.terms.category).map(([name, category]: [string, any]) => {
             return {
                 id: category.ID,
@@ -30,7 +33,7 @@ const getPosts = (json: JsonType.PostsResponse | null): StateType.Post[] => {
             }
         });
         // 記事データを格納
-        posts.push({
+        state.posts.push({
             id: post.ID,
             title: post.title,
             url: post.URL,
@@ -38,9 +41,11 @@ const getPosts = (json: JsonType.PostsResponse | null): StateType.Post[] => {
             categories: categories,
             date: post.date,
         });
-
     }
-    return posts;
+    // 記事件数を格納
+    state.posts_all_count = json.found;
+    state.posts_display_count = state.posts.length;
+    return state;
 }
 
 export default function articleListReducer(state: StateType.ArticleListState = initialState,
@@ -50,6 +55,8 @@ export default function articleListReducer(state: StateType.ArticleListState = i
         case ActionTypes.START_POSTS_REQUEST:
             return {
                 posts: [],
+                posts_display_count: 0,
+                posts_all_count: 0,
                 error: false,
             };
             break;
@@ -57,7 +64,7 @@ export default function articleListReducer(state: StateType.ArticleListState = i
         case ActionTypes.RECEIVE_POSTS_DATA:
             return action.payload.error
                 ? {...state, error: true}
-                : {...state, posts: getPosts(action.payload.json)};
+                : getPostsInfo(action.payload.json);
             break;
         default:
             return state;
