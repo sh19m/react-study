@@ -19,10 +19,12 @@ body
 
 /** カテゴリー */
 .category
+  position absolute
+  top 80px
   display flex
   justify-content flex-start
   height 35px
-  font-size 20px
+  font-size 16px
   margin-top 12px
   margin-left 8px
   line-height 30px
@@ -30,16 +32,26 @@ body
     color lightgray
     font-weight lighter
   &-item
-    margin auto 8px
+    margin auto 1px
+    background-color #333333
     color #CCCCFF
+    text-align center
+    padding 3px 12px 0px 12px
+    border 1px solid #666666
+    border-bottom none
+    border-radius 5px 5px 0px 0px
+    z-index 1
 
 /** 記事一覧 */
 .article
   &-area
+    position absolute
+    top 126px
+    width 100%
+    border-top 1px solid #666666
     display flex
     flex-wrap wrap
     justify-content flex-start
-    cursor pointer
   &-card
     display flex
     flex-flow column
@@ -50,6 +62,7 @@ body
     height 320px
     margin 12px
     border-radius 5px
+    cursor pointer
     &-image
       object-fit cover
       width 280px

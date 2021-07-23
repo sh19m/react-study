@@ -1,12 +1,5 @@
-export type Category = {
-    id: number,
-    name: string,
-};
-export type CategoriesState = {
-    categories: Category[],
-};
 // TODO APIで取得する
-const initialState: CategoriesState = {
+const initialState: StateType.CategoriesState = {
     categories: [
         {
             id: 0,
@@ -23,6 +16,6 @@ const initialState: CategoriesState = {
     ]
 }
 
-export default function categoriesReducer(state: CategoriesState = initialState): CategoriesState {
+export default function categoriesReducer(state: StateType.CategoriesState = initialState): StateType.CategoriesState {
     return state;
 }

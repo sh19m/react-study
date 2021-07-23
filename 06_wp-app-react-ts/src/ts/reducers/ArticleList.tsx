@@ -1,23 +1,8 @@
 import {ArticleListActions} from "../actions/ArticleList";
 import ActionTypes from "../actions/ActionTypes";
 
-export type PostCategory = {
-    id: number,
-    name: string,
-};
-export type Post = {
-    id: number,
-    title: string,
-    url: string,
-    image: string,
-    categories: PostCategory[],
-    date: string,
-};
-export type ArticleListState = {
-    posts: Post[],
-    error: boolean,
-};
-const initialState: ArticleListState = {
+
+const initialState: StateType.ArticleListState = {
     posts: [],
     error: false,
 }
@@ -26,9 +11,12 @@ const initialState: ArticleListState = {
 const MAX_DISPLAY_POSTS: number = 20;
 
 // 記事データを取得
-const getPosts = (json: any): Post[] => {
-    const posts: Post[] = [];
-    const postsData: any = json.posts;
+const getPosts = (json: JsonType.PostsResponse | null): StateType.Post[] => {
+    // NULLチェック
+    const posts: StateType.Post[] = [];
+    if (json == null) return posts;
+    // jsonからStateに変換
+    const postsData: JsonType.Post[] = json.posts;
     // TODO リクエストで制御した方がよい
     const postsCount = json.posts.length < MAX_DISPLAY_POSTS ? json.posts.length : MAX_DISPLAY_POSTS;
     // 取得データを配列に格納
@@ -55,8 +43,8 @@ const getPosts = (json: any): Post[] => {
     return posts;
 }
 
-export default function articleListReducer(state: ArticleListState = initialState,
-                                           action: ArticleListActions): ArticleListState {
+export default function articleListReducer(state: StateType.ArticleListState = initialState,
+                                           action: ArticleListActions): StateType.ArticleListState {
     switch (action.type) {
         // リクエスト開始時に値を初期化
         case ActionTypes.START_REQUEST:

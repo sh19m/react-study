@@ -7,7 +7,7 @@ const startRequest = () => ({
     type: ActionTypes.START_REQUEST,
     payload: {},
 });
-const receiveData = (error: any, json: any) => ({
+const receiveData = (error: any, json: JsonType.PostsResponse | null) => ({
     type: ActionTypes.RECEIVE_DATA,
     payload: { error, json },
 });
@@ -32,7 +32,7 @@ export function fetchPostData() {
         console.log("start request!!");
         try {
             // API経由でJSONを取得
-            const json = await fetchJsonFromURL(API_URL);
+            const json: JsonType.PostsResponse = await fetchJsonFromURL(API_URL);
             console.log("success fetch json!!");
             dispatch(receiveData(null, json));
         } catch (e) {
