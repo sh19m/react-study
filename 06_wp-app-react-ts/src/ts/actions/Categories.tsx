@@ -1,18 +1,18 @@
 import {Action, Dispatch} from "redux";
 import ActionTypes from "./ActionTypes";
 
-// 記事データ取得URL
-const API_URL: string = 'https://public-api.wordpress.com/rest/v1.1/sites/elekibear.com/posts';
+// カテゴリー取得URL
+const CATEGORY_API_URL: string = "https://public-api.wordpress.com/rest/v1.1/sites/elekibear.com/categories";
 
 const startRequest = () => ({
-    type: ActionTypes.START_POSTS_REQUEST,
+    type: ActionTypes.START_CATEGORY_REQUEST,
     payload: {},
 });
-const receiveData = (error: any, json: JsonType.PostsResponse | null) => ({
-    type: ActionTypes.RECEIVE_POSTS_DATA,
+const receiveData = (error: any, json: JsonType.CategoryResponse | null) => ({
+    type: ActionTypes.RECEIVE_CATEGORY_DATA,
     payload: { error, json },
 });
-const fetchPostsJson = (url: string) => {
+const fetchCategoryJson = (url: string) => {
     return fetch(url)
         .then((response: Response) => {
             return response.json();
@@ -22,23 +22,20 @@ const fetchPostsJson = (url: string) => {
         });
 }
 
-// 記事データを取得する
-export function fetchPostData() {
+// カテゴリーデータを取得する
+export function fetchCategoryData() {
     return async (dispatch: Dispatch<Action>) => {
-        // リクエスト開始
         dispatch(startRequest());
         try {
-            // API経由でJSONを取得
-            const json: JsonType.PostsResponse = await fetchPostsJson(API_URL);
+            const json: JsonType.CategoryResponse = await fetchCategoryJson(CATEGORY_API_URL);
             dispatch(receiveData(null, json));
         } catch (e) {
-            // エラー内容を渡す
             dispatch(receiveData(e, null));
         }
     };
 }
 
 // ActionをUnionTypeで定義
-export type ArticleListActions =
+export type CategoriesActions =
     ReturnType<typeof startRequest> |
     ReturnType<typeof receiveData>;

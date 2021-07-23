@@ -21,9 +21,11 @@ declare namespace StateType {
     type Category = {
         id: number,
         name: string,
+        is_selected: boolean,
     };
     type CategoriesState = {
         categories: Category[],
+        error: boolean,
     };
     /** 共通 */
     type ReducerState = {
@@ -35,7 +37,7 @@ declare namespace StateType {
 /** JSON型定義 */
 declare namespace JsonType {
     /** ArticleList */
-    type Category = {
+    type PostCategory = {
         [k: string]: {
             ID: number,
             name: string,
@@ -46,12 +48,21 @@ declare namespace JsonType {
         title: string,
         URL: string,
         terms: {
-            category: Category[],
+            category: PostCategory[],
         },
         featured_image: string,
         date: string,
     };
     type PostsResponse = {
         posts: Post[],
+    };
+    /** Categories */
+    type Category = {
+        ID: number,
+        name: string,
+        parent: number,
+    };
+    type CategoryResponse = {
+        categories: Category[],
     };
 }

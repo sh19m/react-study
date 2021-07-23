@@ -32,15 +32,19 @@ body
     color lightgray
     font-weight lighter
   &-item
+    height 34px
     margin auto 1px
-    background-color #333333
+    background-color #222222
     color #CCCCFF
     text-align center
-    padding 3px 12px 0px 12px
+    padding 3px 16px 0px 16px
     border 1px solid #666666
-    border-bottom none
+    border-bottom 1px solid #666666
     border-radius 5px 5px 0px 0px
     z-index 1
+    &:disabled
+      background-color #333333
+      border-bottom none
 
 /** 記事一覧 */
 .article
