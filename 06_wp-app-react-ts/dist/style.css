@@ -53,6 +53,9 @@ body {
   background-color: #333;
   border-bottom: none;
 }
+.category-item:hover {
+  background-color: #333;
+}
 /** 記事一覧 */
 .article-area {
   position: absolute;
