@@ -1,25 +1,20 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
+import {withRouter} from "react-router-dom";
 import '../../styl/index.styl';
 import {fetchPostData} from "../actions/ArticleList";
 
-const onClickPost = (url: string) => {
-    window.open(url);
-};
-
-function ArticleList() {
+function ArticleList(props: PropsType.ArticleList) {
     const dispatch = useDispatch();
-    const postsDisplayCount: number = useSelector((state: StateType.ReducerState) => state.articleListState.posts_display_count);
-    const postsAllCount: number = useSelector((state: StateType.ReducerState) => state.articleListState.posts_all_count);
-    const posts: StateType.Post[] = useSelector((state: StateType.ReducerState) => state.articleListState.posts);
+    const state = useSelector((state: StateType.ReducerState) => state.articleListState);
 
-    // レンダリング時に記事データを取得
+    // レンダリング時に記事データを取得する
     useEffect(() => {
-        dispatch(fetchPostData());
-    }, []);
+        dispatch(fetchPostData(props.categorySlug));
+    }, [props.categorySlug]);
 
     // 記事データロード中
-    if (posts == null || Object.keys(posts).length == 0) {
+    if (state.posts == null || Object.keys(state.posts).length == 0) {
         return (
             <div className="article-area">
                 <div className="load-msg">Now Loading...</div>
@@ -29,11 +24,11 @@ function ArticleList() {
     } else {
         return (
             <div className="article-area">
-                <div className="article-count">検索結果 {postsAllCount} 件のうち {postsDisplayCount} 件を表示しています。</div>
+                <div className="article-count">検索結果 {state.posts_all_count} 件のうち {state.posts_display_count} 件を表示しています。</div>
                 {
-                    posts.map((post: StateType.Post) => {
+                    state.posts.map((post: StateType.Post) => {
                         return (
-                            <div key={post.id} className="article-card" onClick={() => onClickPost(post.url)}>
+                            <div key={post.id} className="article-card" onClick={() => window.open(post.url)}>
                                 <img className="article-card-image" src={post.image} />
                                 <div className="article-card-title">{post.title}</div>
                                 <div className="article-card-category">

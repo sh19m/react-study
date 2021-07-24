@@ -6,6 +6,7 @@ const initialState: StateType.CategoriesState = {
         {
             id: 0,
             name: "ALL",
+            slug: "",
             is_selected: true,
         },
     ],
@@ -26,6 +27,7 @@ const getCategories = (json: JsonType.CategoryResponse | null): StateType.Catego
             categories.push({
                 id: category.ID,
                 name: category.name,
+                slug: category.slug,
                 is_selected: false,
             });
         }
@@ -41,6 +43,17 @@ const getCategories = (json: JsonType.CategoryResponse | null): StateType.Catego
     return categories;
 }
 
+// カテゴリー選択
+const selectCategory = (categories: StateType.Category[], selectCategoryId: number): StateType.Category[] => {
+    // Stateのカテゴリーをコピー
+    let changeCategories: StateType.Category[] = [...categories];
+    // 選択されたIDの is_selected をtrueにして返却
+    changeCategories.map((category: StateType.Category) => {
+        category.is_selected = category.id == selectCategoryId;
+    })
+    return changeCategories;
+}
+
 export default function categoriesReducer(state: StateType.CategoriesState = initialState,
                                           action: CategoriesActions): StateType.CategoriesState {
     switch (action.type) {
@@ -51,18 +64,24 @@ export default function categoriesReducer(state: StateType.CategoriesState = ini
                     {
                         id: 0,
                         name: "ALL",
+                        slug: "",
                         is_selected: true,
                     },
                 ],
                 error: false,
             };
-            break;
         // データ受信時にCategoryデータを設定
         case ActionTypes.RECEIVE_CATEGORY_DATA:
             return action.payload.error
                 ? {...state, error: true}
                 : {...state, categories: getCategories(action.payload.json)};
-            break;
+        // カテゴリー選択時
+        case ActionTypes.SELECT_CATEGORY:
+            return {
+                ... state,
+                categories: selectCategory(state.categories, action.payload.selectCategoryId),
+                error: false,
+            }
         default:
             return state;
     }

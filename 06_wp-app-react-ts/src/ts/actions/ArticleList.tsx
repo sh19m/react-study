@@ -23,13 +23,19 @@ const fetchPostsJson = (url: string) => {
 }
 
 // 記事データを取得する
-export function fetchPostData() {
+export function fetchPostData(categoryName: string) {
     return async (dispatch: Dispatch<Action>) => {
         // リクエスト開始
         dispatch(startRequest());
         try {
             // API経由でJSONを取得
-            const json: JsonType.PostsResponse = await fetchPostsJson(API_URL);
+            let url: string = API_URL;
+            // カテゴリー名が指定されていればURLに追加する
+            if (categoryName) {
+                url += "?category=" + categoryName;
+            }
+            console.log(url)
+            const json: JsonType.PostsResponse = await fetchPostsJson(url);
             dispatch(receiveData(null, json));
         } catch (e) {
             // エラー内容を渡す

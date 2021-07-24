@@ -59,13 +59,11 @@ export default function articleListReducer(state: StateType.ArticleListState = i
                 posts_all_count: 0,
                 error: false,
             };
-            break;
         // データ受信時にPostデータを設定
         case ActionTypes.RECEIVE_POSTS_DATA:
             return action.payload.error
                 ? {...state, error: true}
                 : getPostsInfo(action.payload.json);
-            break;
         default:
             return state;
     }

@@ -23,6 +23,7 @@ declare namespace StateType {
     type Category = {
         id: number,
         name: string,
+        slug: string,
         is_selected: boolean,
     };
     type CategoriesState = {
@@ -33,6 +34,13 @@ declare namespace StateType {
     type ReducerState = {
         articleListState: ArticleListState,
         categoriesState: CategoriesState,
+    }
+}
+
+/** Props型定義 */
+declare namespace PropsType {
+    type ArticleList ={
+        categorySlug: string,
     }
 }
 
@@ -63,6 +71,7 @@ declare namespace JsonType {
     type Category = {
         ID: number,
         name: string,
+        slug: string,
         parent: number,
     };
     type CategoryResponse = {

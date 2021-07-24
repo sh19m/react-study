@@ -35,7 +35,16 @@ export function fetchCategoryData() {
     };
 }
 
+// カテゴリーを選択する
+export function selectCategoryId(selectCategoryId: number) {
+    return {
+        type: ActionTypes.SELECT_CATEGORY,
+        payload: {selectCategoryId},
+    };
+}
+
 // ActionをUnionTypeで定義
 export type CategoriesActions =
     ReturnType<typeof startRequest> |
-    ReturnType<typeof receiveData>;
+    ReturnType<typeof receiveData> |
+    ReturnType<typeof selectCategoryId>;
