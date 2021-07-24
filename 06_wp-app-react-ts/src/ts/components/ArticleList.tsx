@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {withRouter} from "react-router-dom";
 import '../../styl/index.styl';
 import {fetchPostData} from "../actions/ArticleList";
 
@@ -13,8 +12,15 @@ function ArticleList(props: PropsType.ArticleList) {
         dispatch(fetchPostData(props.categorySlug));
     }, [props.categorySlug]);
 
+    // エラー発生時
+    if (state.error) {
+        return (
+            <div className="article-area">
+                <div className="err-msg">読込中にエラーが発生しました。</div>
+            </div>
+        );
     // 記事データロード中
-    if (state.posts == null || Object.keys(state.posts).length == 0) {
+    } else if (state.posts == null || Object.keys(state.posts).length == 0) {
         return (
             <div className="article-area">
                 <div className="load-msg">Now Loading...</div>

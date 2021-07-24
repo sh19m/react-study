@@ -12,7 +12,7 @@ export default function App() {
             </div>
             <Categories />
             <Switch>
-                <Route path="/"
+                <Route exact path="/"
                        render={() => <ArticleList categorySlug={""}/>} />
                 <Route exact path="/category/" render={() => <Redirect to="/" />} />
                 <Route exact path="/category/:slug"
