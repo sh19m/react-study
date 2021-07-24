@@ -11,4 +11,4 @@ Reactのサンプルプロジェクトをまとめています。
 03_todo-app-react-redux|02をReduxスタイルで記述したもの
 04_count-app-react-ts|TypeScriptとReactで作ったカウントアプリ
 05_todo-app-react-ts|03をTypeScriptで書き直したもの
-06_wp-app-react-ts|wordpressAPIを使ったアプリ ※開発中
+06_wp-app-react-ts|記事をwordpressAPI経由で検索するアプリ
