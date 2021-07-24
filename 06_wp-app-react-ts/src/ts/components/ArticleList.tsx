@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import '../../styl/index.styl';
 import {fetchPostData} from "../actions/ArticleList";
@@ -12,22 +12,24 @@ function ArticleList(props: PropsType.ArticleList) {
         dispatch(fetchPostData(props.categorySlug));
     }, [props.categorySlug]);
 
-    // エラー発生時
     if (state.error) {
+        // エラー発生時
         return (
             <div className="article-area">
                 <div className="err-msg">読込中にエラーが発生しました。</div>
             </div>
         );
-    // 記事データロード中
+
     } else if (state.posts == null || Object.keys(state.posts).length == 0) {
+        // 記事データロード中
         return (
             <div className="article-area">
                 <div className="load-msg">Now Loading...</div>
             </div>
         );
-    // 記事データの表示
+
     } else {
+        // 記事データ取得後の表示
         return (
             <div className="article-area">
                 <div className="article-count">検索結果 {state.posts_all_count} 件のうち {state.posts_display_count} 件を表示しています。</div>

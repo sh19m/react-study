@@ -1,6 +1,13 @@
+/** Props型定義 */
+declare namespace PropsType {
+    type ArticleList ={
+        categorySlug: string,
+    }
+}
+
 /** State型定義 */
 declare namespace StateType {
-    /** ArticleList */
+    // ArticleList
     type PostCategory = {
         id: number,
         name: string,
@@ -19,7 +26,7 @@ declare namespace StateType {
         posts_all_count: number,
         error: boolean,
     };
-    /** Categories */
+    // Categories
     type Category = {
         id: number,
         name: string,
@@ -30,23 +37,16 @@ declare namespace StateType {
         categories: Category[],
         error: boolean,
     };
-    /** 共通 */
+    // 共通
     type ReducerState = {
         articleListState: ArticleListState,
         categoriesState: CategoriesState,
     }
 }
 
-/** Props型定義 */
-declare namespace PropsType {
-    type ArticleList ={
-        categorySlug: string,
-    }
-}
-
 /** JSON型定義 */
 declare namespace JsonType {
-    /** ArticleList */
+    // ArticleList
     type PostCategory = {
         [k: string]: {
             ID: number,
@@ -67,14 +67,14 @@ declare namespace JsonType {
         found: number,
         posts: Post[],
     };
-    /** Categories */
+    // Categories
     type Category = {
         ID: number,
         name: string,
         slug: string,
         parent: number,
     };
-    type CategoryResponse = {
+    type CategoriesResponse = {
         categories: Category[],
     };
 }

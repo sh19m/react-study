@@ -1,7 +1,6 @@
 import {ArticleListActions} from "../actions/ArticleList";
 import ActionTypes from "../actions/ActionTypes";
 
-
 const initialState: StateType.ArticleListState = {
     posts: [],
     posts_display_count: 0,
@@ -9,7 +8,10 @@ const initialState: StateType.ArticleListState = {
     error: false,
 }
 
-// 記事データを取得
+/**
+ * 記事データ取得処理
+ * @param json 取得したJSONデータ
+ */
 const getPostsInfo = (json: JsonType.PostsResponse | null): StateType.ArticleListState => {
     // State定義
     const state: StateType.ArticleListState = {
@@ -18,13 +20,14 @@ const getPostsInfo = (json: JsonType.PostsResponse | null): StateType.ArticleLis
         posts_all_count: 0,
         error: false,
     };
-    // NULLチェック
+
+    // JSONデータがNULLの場合、処理終了
     if (json == null) return state;
-    // jsonからStateに変換
+
+    // JSONデータからStateに変換して格納
     const postsData: JsonType.Post[] = json.posts;
-    // 取得データを配列に格納
     for (let i = 0; i < json.posts.length; i++) {
-        // カテゴリー配列を取り出す
+        // 記事データを取り出す
         const post: JsonType.Post = postsData[i];
         const categories = Object.entries(post.terms.category).map(([name, category]: [string, any]) => {
             return {
@@ -42,7 +45,7 @@ const getPostsInfo = (json: JsonType.PostsResponse | null): StateType.ArticleLis
             date: post.date,
         });
     }
-    // 記事件数を格納
+    // 記事件数を設定
     state.posts_all_count = json.found;
     state.posts_display_count = state.posts.length;
     return state;

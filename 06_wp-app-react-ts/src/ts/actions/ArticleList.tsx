@@ -2,16 +2,28 @@ import {Action, Dispatch} from "redux";
 import ActionTypes from "./ActionTypes";
 
 // 記事データ取得URL
-const API_URL: string = 'https://public-api.wordpress.com/rest/v1.1/sites/elekibear.com/posts';
+const POSTS_API_URL: string = 'https://public-api.wordpress.com/rest/v1.1/sites/elekibear.com/posts';
 
+/**
+ * リクエスト開始Action
+ */
 const startRequest = () => ({
     type: ActionTypes.START_POSTS_REQUEST,
     payload: {},
 });
+
+/**
+ * データ受信完了Action
+ */
 const receiveData = (error: any, json: JsonType.PostsResponse | null) => ({
     type: ActionTypes.RECEIVE_POSTS_DATA,
     payload: { error, json },
 });
+
+/**
+ * JSONデータ取得処理
+ * @param url 取得対象のURL
+ */
 const fetchPostsJson = (url: string) => {
     return fetch(url)
         .then((response: Response) => {
@@ -22,23 +34,26 @@ const fetchPostsJson = (url: string) => {
         });
 }
 
-// 記事データを取得する
-export function fetchPostData(categoryName: string) {
+/**
+ * 記事データを取得処理
+ * @param categorySlug カテゴリースラッグ
+ */
+export function fetchPostData(categorySlug: string) {
     return async (dispatch: Dispatch<Action>) => {
         // リクエスト開始
         dispatch(startRequest());
         try {
-            // API経由でJSONを取得
-            let url: string = API_URL;
-            // カテゴリー名が指定されていればURLに追加する
-            if (categoryName) {
-                url += "?category=" + categoryName;
+            // URLからJSONを取得
+            let url: string = POSTS_API_URL;
+            // カテゴリースラッグをリクエストパラメータに追加
+            if (categorySlug) {
+                url += "?category=" + categorySlug;
             }
-            console.log(url)
             const json: JsonType.PostsResponse = await fetchPostsJson(url);
+            // データ受信完了
             dispatch(receiveData(null, json));
         } catch (e) {
-            // エラー内容を渡す
+            // エラー発生時
             dispatch(receiveData(e, null));
         }
     };

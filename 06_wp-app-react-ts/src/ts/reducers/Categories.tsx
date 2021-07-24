@@ -13,12 +13,18 @@ const initialState: StateType.CategoriesState = {
     error: false,
 }
 
-// カテゴリー取得
-const getCategories = (json: JsonType.CategoryResponse | null): StateType.Category[] => {
-    // NULLチェック
+/**
+ * カテゴリー取得処理
+ * @param json 取得したJSONデータ
+ */
+const getCategories = (json: JsonType.CategoriesResponse | null): StateType.Category[] => {
+    // State定義
     const categories: StateType.Category[] = initialState.categories;
+
+    // JSONデータがNULLの場合、処理終了
     if (json == null) return categories;
-    // jsonからStateに変換
+
+    // JSONデータからStateに変換
     const categoriesData: JsonType.Category[] = json.categories;
     for (let i = 0; i < categoriesData.length; i++) {
         const category: JsonType.Category = categoriesData[i];
@@ -43,11 +49,15 @@ const getCategories = (json: JsonType.CategoryResponse | null): StateType.Catego
     return categories;
 }
 
-// カテゴリー選択
+/**
+ * カテゴリー選択処理
+ * @param categories stateのカテゴリー情報
+ * @param selectCategoryId 選択されたカテゴリーID
+ */
 const selectCategory = (categories: StateType.Category[], selectCategoryId: number): StateType.Category[] => {
     // Stateのカテゴリーをコピー
     let changeCategories: StateType.Category[] = [...categories];
-    // 選択されたIDの is_selected をtrueにして返却
+    // 選択状態を更新して返却
     changeCategories.map((category: StateType.Category) => {
         category.is_selected = category.id == selectCategoryId;
     })

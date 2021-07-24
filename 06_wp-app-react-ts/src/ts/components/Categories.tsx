@@ -1,6 +1,6 @@
 import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {useHistory, withRouter} from "react-router-dom";
+import {useHistory} from "react-router-dom";
 import '../../styl/index.styl';
 import {fetchCategoryData, selectCategoryId} from "../actions/Categories";
 
@@ -16,11 +16,11 @@ function Categories() {
 
     // 押下されたカテゴリーページに遷移する
     const pushCategoryPage = (selectCategory: StateType.Category): void => {
-        // カテゴリーを選択状態にして遷移する
         dispatch(selectCategoryId(selectCategory.id));
         history.push(`/category/${selectCategory.slug}`)
     };
 
+    // カテゴリーの表示
     return (
         <div className="category">
             {
@@ -37,4 +37,4 @@ function Categories() {
         </div>
     );
 }
-export default withRouter(Categories);
+export default Categories;

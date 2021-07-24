@@ -12,11 +12,10 @@ export default function App() {
             </div>
             <Categories />
             <Switch>
-                <Route exact path="/"
-                       render={() => <ArticleList categorySlug={""}/>} />
+                <Route exact path="/" render={() => <ArticleList categorySlug={""}/>} />
                 <Route exact path="/category/" render={() => <Redirect to="/" />} />
                 <Route exact path="/category/:slug"
-                       render={({match}) => <ArticleList categorySlug={match.params.slug}/>} />
+                       render={({match: match}) => <ArticleList categorySlug={match.params.slug}/>} />
             </Switch>
         </div>
     );
